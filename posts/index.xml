@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on Enochack</title>
+    <link>https://enochack.com/posts/</link>
+    <description>Recent content in Posts on Enochack</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 16 Dec 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://enochack.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Thoughts About Coding</title>
+      <link>https://enochack.com/posts/coding-thinking/</link>
+      <pubDate>Sat, 16 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://enochack.com/posts/coding-thinking/</guid>
+      <description>Coding is a process to learn and abstract. The more abstract, the closer to the nature and truth. The matrix is everywhere. Computer science is the study of computation: that is, how to represent and process information. Here are just a few of the concepts you might study:
+Problem solving: you’ll learn algorithms - that is, general strategies, such as divide and conquer,recursion,heuristics, greedy search, and randomized algorithms - that help you model, decompose, and solve any kind of problem.</description>
+    </item>
+    
+    <item>
+      <title>Scala Design Patterns Summary</title>
+      <link>https://enochack.com/posts/scala-design-patterns/</link>
+      <pubDate>Tue, 09 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://enochack.com/posts/scala-design-patterns/</guid>
+      <description>Here is a set of common scala design patterns.</description>
+    </item>
+    
+  </channel>
+</rss>
