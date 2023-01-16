@@ -1,4 +1,4 @@
-baseURL: https://enochack.com/
+# baseURL: https://enochack.com/
 languageCode: en-us
 title: Enochack
 theme: "PaperMod"
@@ -27,6 +27,7 @@ menu:
       url: archives/
       weight: 20
     - name: Mail
+      weight: 25
       url: mailto:dawnshepherd0909@gmail.com
 
 outputs:
