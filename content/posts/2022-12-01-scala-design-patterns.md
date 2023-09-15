@@ -70,9 +70,9 @@ object Adapter extends App {
 
 ## 3. Decorator
 ```scala
-// 在以下两种情况下可以考虑使用装饰器模式：
-// (1)需要在不影响其他对象的情况下，以动态、透明的方式给对象添加职责。
-// (2)如果不适合使用子类来进行扩展的时候，可以考虑使用装饰器模式。
+// We could consider using the decorator pattern if
+// 1. responsibilities need to be added to objects in a dynamic and transparent manner without affecting other objects
+// 2. not suitable to use subclasses for extension
 
 
 object Decorator extends App {
