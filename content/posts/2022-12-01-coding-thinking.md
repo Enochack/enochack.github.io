@@ -1,8 +1,9 @@
 ---
 title: "Thoughts About Coding"
 date: "2022-12-01"
-categories: Tech
+categories: Coding
 tags: ["thinking"]
+draft: false
 ---
 
 > - Coding is a process to learn and abstract.

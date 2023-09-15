@@ -41,7 +41,7 @@ params:
   defaultTheme: auto
   description: "Enochack"
   author: "Me"
-  keywords: [Tech, DBMS, Gaming]
+  keywords: ["Tech", "DBMS", "Data Lakehouse", "SQL Engine", "Gaming"]
   ShowToc: true
   ShowBreadCrumbs: true
   ShowReadingTime: true
