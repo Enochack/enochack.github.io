@@ -5,10 +5,11 @@ ShowToc: true
 
 ## Interests
 
+- C / C++ / Rust
 - Data engineering
 - SQL engine
-- ML
-- AI
+- AI / ML
+
 
 ## Experience
 
