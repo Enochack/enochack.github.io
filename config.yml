@@ -27,6 +27,9 @@ menu:
     - name: Archive
       url: archives/
       weight: 20
+    - name: About Me
+      url: aboutme/
+      weight: 22
     - name: Mail
       weight: 25
       url: mailto:dawnshepherd0909@gmail.com

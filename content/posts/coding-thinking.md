@@ -1,9 +1,8 @@
 ---
 title: "Thoughts About Coding"
-# date: "2022-12-01"
-# lastmod: "2023-09-22"
-categories: Coding
-tags: ["thinking"]
+date: "2022-12-01"
+categories: Thinking
+tags: ["Coding"]
 draft: false
 ---
 
