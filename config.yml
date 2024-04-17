@@ -54,3 +54,4 @@ params:
   ShowPostNavLinks: true
   ShowRssButtonInSectionTermList: true
   hideFooter: false
+  mermaid: true
