@@ -3,7 +3,6 @@ title: "MPP vs MapReduce for SQL Engines"
 date: "2023-09-15"
 categories: "SQL Query Engine"
 tags: ["DBMS", "Data Lakehouse", "MPP", "MapReduce", "Distributed"]
-mermaid: true
 ---
 
 # Introduction
