@@ -66,13 +66,17 @@ There are serveral ways to do data-exchange
 
 ## Drawbacks of MPP
 
-### Barrel Effect
+### Bucket Effect
 
-As each subtask is bound to a specific cluster node and data slice, it is impossible to re-schedule a subtask to be executed on another cluster node or data slice if the subtask execution is slower than expected. This leads to the barrel effect, where the slowest subtask will determine the duration of the entire ditributed query.
+As each subtask is bound to a specific cluster node and data slice, it is impossible to re-schedule a subtask to be executed on another cluster node or data slice if the subtask execution is slower than expected. This leads to the bucket effect, where the slowest subtask will determine the duration of the entire ditributed query.
+
+### Limited Scalability
+
+Because of the bucket effect we mentioned in previous paragraph, if the cluster grows larger, there will be a greater chance to have some slow tasks which slow down the entire query.
 
 ### Problems with Heavy Queries
 
-MPP systems always rely on a large memory since performance is so critical. So if a query has a very large input or output dataset, it will be likely that the query will fail.
+MPP systems always rely on a large memory since performance is so critical. So if a query input or output a very large dataset, the query will be more likely to fail.
 
 ### Poor Concurrency
 
@@ -128,20 +132,16 @@ However, a MapReduce system will create a barrier between subtasks when there ne
 
 # When to Choose MPP or MapReduce?
 
-## MPP
+- Choose MPP if your queries match the following conditions
 
-Choose MPP if your queries match the following conditions
+  - Performance outweighs fault tolerance
+  - A limited size of dataset is returned from a single query. A good example is a top-N query
+  - The queries are for real-time analytics mainly rather than persisting to a distributed storage system(e.g. S3, GCS, HDFS)
 
-- Performance outweighs fault tolerance
-- A limited size of dataset is returned from a single query. A good example is a top-N query
-- The queries are for real-time analytics mainly rather than persisting to a distributed storage system(e.g. S3, GCS, HDFS)
+- Choose MapReduce if your queries match the following conditions
 
-## MapReduce
-
-Choose MapReduce if your queries match the following conditions
-
-- Fault tolerance outweighs performance
-- A large size of datasets is returned from a single query. For example, ETL/ELT queries
-- You always need to persist the query result to a distributed storage system(e.g. S3, GCS, HDFS)
+  - Fault tolerance outweighs performance
+  - A large size of datasets is returned from a single query. For example, ETL/ELT queries
+  - You always need to persist the query result to a distributed storage system(e.g. S3, GCS, HDFS)
 
 # References
