@@ -13,13 +13,6 @@ pygmentsUseClasses: true
 # googleAnalytics: UA-123-45
 enableGitInfo: true
 
-frontmatter:
-  lastmod:
-    - lastmod
-    - :git
-    - date
-    - publishDate
-
 menu:
   main:
     - name: Search
