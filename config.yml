@@ -27,12 +27,12 @@ menu:
     - name: Archive
       url: archives/
       weight: 20
-    - name: About Me
-      url: aboutme/
+    - name: CV
+      url: cv/
       weight: 22
     - name: Mail
       weight: 25
-      url: mailto:dawnshepherd0909@gmail.com
+      url: mailto:enoch.tsao@outlook.com
 
 outputs:
   home:
@@ -44,7 +44,7 @@ params:
   env: production
   defaultTheme: auto
   description: "Enochack"
-  author: "Me"
+  author: "Enoch"
   keywords: ["Tech", "DBMS", "Data Lakehouse", "SQL Engine", "Gaming"]
   ShowToc: true
   ShowBreadCrumbs: true

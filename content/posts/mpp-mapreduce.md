@@ -1,5 +1,5 @@
 ---
-title: "MPP vs MapReduce for SQL Query Engines"
+title: "MPP vs MapReduce for SQL Engines"
 date: "2023-09-15"
 categories: "SQL Query Engine"
 tags: ["DBMS", "Data Lakehouse", "MPP", "MapReduce", "Distributed"]
@@ -93,7 +93,7 @@ Each query submitted to a MPP system will be distributed across the whole cluste
 
 # MapReduce
 
-Just like MPP systems, MapReduce systems are also widely used for analyzing large datasets in the context of data warehousing. And they also distribute data and tasks across clusters, but with a different computing architecture.
+Just like MPP systems, MapReduce systems are also widely used for analyzing large datasets in the context of data warehousing. And they also distribute data and tasks across clusters, but with a different computing model.
 
 ## Why MapReduce?
 
@@ -128,8 +128,22 @@ However, a MapReduce system will create a barrier between subtasks when there ne
 - [Hive](https://github.com/apache/hive)
 - [Spark SQL](https://github.com/apache/spark)
 
-# Comparison
-
 # When to Choose MPP or MapReduce?
+
+## MPP
+
+Choose MPP if your queries match the following conditions
+
+- Performance outweighs fault tolerance
+- A limited size of dataset is returned from a single query. A good example is a top-N query
+- The queries are for real-time analytics mainly rather than persisting to a distributed storage system(e.g. S3, GCS, HDFS)
+
+## MapReduce
+
+Choose MapReduce if your queries match the following conditions
+
+- Fault tolerance outweighs performance
+- A large size of datasets is returned from a single query. For example, ETL/ELT queries
+- You always need to persist the query result to a distributed storage system(e.g. S3, GCS, HDFS)
 
 # References
