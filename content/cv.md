@@ -12,11 +12,11 @@ ShowToc: true
 
 Enoch is a software engineer with backgrouds of **SQL Engine** and **Data Engineering**.
 
-- As Enoch has worked on a SQL engine in **C/C++**, he has developed skills of
+- As Enoch has worked on a [**SQL engine**](#windjammer-query-engine-062018---present) in **C/C++**, he has developed skills of
   - **System Programming in C/C++ (Advanced)**
   - **SQL Engine (Advanced)**
   - **Arrow (Intermediate)**
-- As Enoch has worked on a large scale data platform in **Java/Scala/SQL**, he has developed skills of
+- As Enoch has worked on a large scale [**data platform**](https://www.growingio.com) in **Java/Scala/SQL**, he has developed skills of
   - **Object Oriented Programming (Advanced)**
   - **Functional Programming (Advanced)**
   - **SQL for analytics (Advanced)**
