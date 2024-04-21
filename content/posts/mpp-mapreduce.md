@@ -1,7 +1,7 @@
 ---
 title: "MPP vs MapReduce for SQL Engines"
 date: "2023-09-15"
-categories: "SQL Query Engine"
+categories: "SQL Engine"
 tags: ["DBMS", "Data Lakehouse", "MPP", "MapReduce", "Distributed"]
 ---
 
@@ -9,82 +9,62 @@ tags: ["DBMS", "Data Lakehouse", "MPP", "MapReduce", "Distributed"]
 
 In the world of big data processing, two giants have emerged to tackle the colossal task of handling and analyzing massive datasets: Massively Parallel Processing (MPP) and MapReduce. Both of these paradigms offer unique solutions to the challenges posed by the ever-growing volume of data. In this tech blog, we'll delve into the intricacies of MPP and MapReduce, comparing their strengths and weaknesses to help you choose the right tool for your data processing needs.
 
+## Terms
+
+- **Executor** - A group of tasks to execute a relational algebra operator
+- **Task** - A process or thread to process a data partition
+- **Stage** - Comes from [Apache Spark](https://github.com/apache/spark). A group of Executors that don't do data-exchange between cluster nodes. For example, a group with Executors of `Projection` and `Selection`
+
 # MPP
 
 MPP(Massively Parallel Processing) is a computing architecture for processing and analyzing large datasets in a distributed computing environment, which is commonly used in the context of data warehousing. MPP systems are designed to handle complex queries with high performance by distributing data and processing tasks across multiple nodes in a cluster. 
 
-## Why MPP?
-
-### High Performance
-
-MPP systems are optimized for performance, especially when it comes to complex analytical queries. They can handle queries that involve large datasets, aggregations, joins, and other data manipulations with low-latency responses, making them ideal for business intelligence and data warehousing tasks. High performance should be the most valuable feature of MPP.
-
-### Complex Query Support
-
-MPP databases are well-suited for executing complex SQL queries such as the [TPCDS](https://www.tpc.org/tpcds/) queries. This makes them valuable for organizations that need to perform advanced data analytics.
-
-## How does an MPP SQL Query Engine Work?
-
-### The Life of a SQL
+## How MPP Works for SQL Execution
 
 ```mermaid
 flowchart TD
-  a("Parsing the SQL to an AST")
-  --> b("Convert the AST to a query plan")
-  --> c("Optimizing the query plan based on rules and cost")
-  --> d("Executing the optimized query plan")
-```
-
-The MPP features are applied to the final phase, in which the query execution is split into many subtasks to be executed concurrently.
-
-### Query Execution
-
-```mermaid
-flowchart TD
-a("Splitting the query exectuion into subtasks")
---> b("Bingding each subtask to a cluster node and data slice")
---> c("Pipelining subtasks")
---> d("Executing subtasks concurrently")
+a("Splitting the query exectuion into tasks")
+--> b("Bingding each task to a cluster node and data slice")
+--> c("Pipelining tasks")
+--> d("Executing tasks concurrently")
 --> e("Collecting the query result and return")
 ```
 
-Each subtask is bound to a process/thread on a cluster node and a data slice on a distributed file system such as S3. The subtasks are pipelined without any barrier. The pipeline could be push-based or pull-based and the latter is more common in real systems (e.g. the Volcano execution model).
+Each task is bound to a process/thread on a cluster node and a data slice on a distributed file system such as S3. The tasks are pipelined without any barrier. The pipeline could be push-based or pull-based and the latter is more common in real systems (e.g. the Volcano execution model).
 
 ### Data Exchange
 
-With push-based pipeline, the computing result of each subtask is pushed to the target subtask. With pull-based pipeline, the computing result of each subtask is pulled from the target subtask.
+Generally, there are 2 kinds of pipeline for MPP -- push-based pipeline and pull-based pipeline. With push-based pipeline, the computing result of each task is pushed to the target task. With pull-based pipeline, the computing result of each task is pulled from the target task.
 
-There are serveral ways to do data-exchange
+If we are dealing with queries which don't need to shuffle data between tasks, the result data of each task will just be transfered to a task of the next executor on the same cluster node. Or we will need to do data-exchange between cluster nodes via network.
+
+There are serveral ways to do data-exchange between MPP tasks (each task could be either a process or a thread), and here we just talk about the following ways
 
 - hash-based exchange
 
-  Determine the target subtask based on a hash value computed from the key column(s).
+  Determine the target task based on a hash value computed from the key column(s).
 
 - sort-based exchange
 
-  Determine the target subtask based on the range of the key column(s).
+  Determine the target task based on the range of the key column(s).
 
-## Drawbacks of MPP
+## Pros & Cons of MPP
 
-### Bucket Effect
+### Pros
 
-As each subtask is bound to a specific cluster node and data slice, it is impossible to re-schedule a subtask to be executed on another cluster node or data slice if the subtask execution is slower than expected. This leads to the bucket effect, where the slowest subtask will determine the duration of the entire ditributed query.
+- **High Performance:** MPP systems are optimized for performance, especially when it comes to complex analytical queries. They can handle queries that involve large datasets, aggregations, joins, and other data manipulations with low-latency responses, making them ideal for business intelligence and data warehousing tasks. High performance should be the most valuable feature of MPP
 
-### Limited Scalability
+- **Complex Query Support:** MPP databases are well-suited for executing complex SQL queries such as the [TPCDS](https://www.tpc.org/tpcds/) queries. This makes them valuable for organizations that need to perform advanced data analytics
 
-Because of the bucket effect we mentioned in previous paragraph, if the cluster grows larger, there will be a greater chance to have some slow tasks which slow down the entire query.
+### Cons
 
-### Problems with Heavy Queries
+- **Limited Scalability:** As each task is bound to a specific cluster node and data slice, it is impossible to re-schedule a task to be executed on another cluster node or data slice if the task execution is slower than expected. This leads to the bucket effect, where the slowest task will determine the duration of the entire ditributed query. So if the cluster grows larger, there will be a greater chance to have slow tasks which slow down the entire query execution
 
-MPP systems always rely on a large memory since performance is so critical. So if a query input or output a very large dataset, the query will be more likely to fail.
+- **Poor Fault Tolerance:** MPP has no strong fault-tolerance mechanism to handle failed tasks. It always tend to retry the entire query execution since the execution is very fast to complete or fail
 
-### Poor Concurrency
+## MPP SQL Engines and Databases
 
-Each query submitted to a MPP system will be distributed across the whole cluster. So the system can't handle too many concurrent queries or the cluster resources will be saturated soon and the system might freezes for a period of time, which could be a disaster to your business.
-
-## Open Source MPP-based SQL Query Engines and Databases
-
-- SQL Query Engines
+- SQL Engines
   - [Trino](https://github.com/trinodb/trino)
   - [Impala](https://github.com/apache/impala)
 
@@ -97,35 +77,31 @@ Each query submitted to a MPP system will be distributed across the whole cluste
 
 Just like MPP systems, MapReduce systems are also widely used for analyzing large datasets in the context of data warehousing. And they also distribute data and tasks across clusters, but with a different computing model.
 
-## Why MapReduce?
-
-### Theoretically Unlimited Horizontal Scalability
-
-### Stability
-
-### Capacity of Handling Heavy Queries
-
-## How does a MapReduce SQL Query Engine Work?
-
-### Query Execution
-
-Just like MPP SQL query engines, the execution phase is where MapReduce fits into.
+## How MapReduce Works for SQL Engine
 
 ```mermaid
 flowchart TD
 a("Splitting the query execution into stages")
---> b("Splitting each stage into subtasks")
---> c("Executing the query stage after stage")
+--> b("Splitting each stage into tasks")
+--> c("Executing the query stage by stage")
 --> d("Writing the query result into a file system")
 ```
 
-However, a MapReduce system will create a barrier between subtasks when there needs a data-exchange, the more generic term for which is shuffle. The MapReduce system splits a query into stages with shuffles as boundaries at first, and then execute the query stage after stage. Each stage has a set of subtasks. The computing result of each stage could be output to both memory and disks. One stage cannot be started until the previous stage is completed. So the subtasks are not pipelined like what MPP systems do.
+However, a MapReduce system will create a barrier between tasks when there needs a data-exchange, the more generic term for which is shuffle. The MapReduce system splits a query into stages with shuffles as boundaries at first, and then execute the query stage after stage. Each stage has a set of tasks. The computing result of each stage could be output to both memory and disks. One stage cannot be started until the previous stage is completed. So the tasks are not pipelined like what MPP systems do.
 
-## Drawbacks of MapReduce
+## Pros & Cons of MapReduce
 
-### Lower Performance
+### Pros
 
-## Open Source MapReduce-based SQL Query Engines
+- **Theoretically Unlimited Horizontal Scalability:** As MapReduce is able to migrate slow tasks to another cluster node, there's no bucket effect. So the performance grows nearly linearly as the cluster scales out
+
+- **Fault Tolerance:** MapReduce retries failed tasks or stages rather than the entire execution to ensure that the cost can be as little as possible. Even if a cluster node is down, it is able to migrate tasks to other nodes
+
+### Cons
+
+- **Lower Performance:** As the MapReduce tasks are not pipelined and they are divided into stages and executed stage by stage, the performance of the entire query can be lower than MPP at most time
+
+## MapReduce SQL Engines
 
 - [Hive](https://github.com/apache/hive)
 - [Spark SQL](https://github.com/apache/spark)
@@ -143,5 +119,3 @@ However, a MapReduce system will create a barrier between subtasks when there ne
   - Fault tolerance outweighs performance
   - A large size of datasets is returned from a single query. For example, ETL/ELT queries
   - You always need to persist the query result to a distributed storage system(e.g. S3, GCS, HDFS)
-
-# References
