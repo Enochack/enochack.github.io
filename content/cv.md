@@ -22,6 +22,7 @@ Enoch is a software engineer with backgrouds of **SQL Engine** and **Data Engine
   - **SQL for analytics (Advanced)**
   - **Data Engineering based on the Apache Spark ecosystem (Advanced)**
 - As Enoch has worked on above challenging projects, he becomes able to addressing tricky issues such as weird bugs and complex features independently
+- As Enoch has worked remotely from China for a US company for 5+ years, he knows very well about the efficient ways to communicate and coorperate with teammates from different time zones
 - Eventually Enoch realized that **Modern C++** was his favorite language, so he decided to focus on **Modern C++** programming
 
 ---
