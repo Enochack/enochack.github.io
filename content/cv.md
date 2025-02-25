@@ -42,7 +42,7 @@ Enoch is a software engineer with backgrouds of **SQL Engine** and **Data Engine
 
 During these years, Enoch was building data platforms based on the Apache Spark ecosystem for the following companies
 
-- **eBay in Shanghai, China (04/2018 - 06/2018)**
+- **eBay in Shanghai, China (Apr 2018 - Jun 2018)**
 - **GrowingIO in Beijing, China (Aug 2016 - Feb 2018)**
 - **Westen Bridge Tech in Nanjing, China (Mar 2013 - Aug 2016)**
 
