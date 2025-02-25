@@ -6,7 +6,7 @@ ShowToc: true
 ## ABOUT
 
 - Enoch Tsao - **Software Engineer (C/C++)**
-- [enoch.tsao@outlook.com](mailto:enoch.tsao@outlook.com)
+- [enochack.me@gmail.com](mailto:enochack.me@gmail.com)
 
 ### Summary
 
