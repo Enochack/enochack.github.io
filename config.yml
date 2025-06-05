@@ -27,12 +27,12 @@ menu:
     - name: Archive
       url: archives/
       weight: 20
-    - name: CV
-      url: cv/
-      weight: 22
-    - name: Mail
-      weight: 25
-      url: mailto:enoch.tsao@outlook.com
+    # - name: CV
+    #   url: cv/
+    #   weight: 22
+    # - name: Mail
+    #   weight: 25
+    #   url: mailto:enoch.tsao@outlook.com
 
 outputs:
   home:
